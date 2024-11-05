@@ -1,0 +1,34 @@
+---
+title: "lecture_4"
+format: html
+editor_options: 
+  chunk_output_type: console
+---
+# use palmer penguins to fit a model that has an interaction between a continous and categorical variable
+
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+
+penguins <- penguins
+
+body_flipper_sex <- (lm(body_mass_g ~ flipper_length_mm + sex + flipper_length_mm : sex, penguins))
+
+summary(body_flipper_sex)
+
+```
+body_mass = B0 + B1flipper (slope) + b2sex=male (1 when male) + b3flipper x sexmale 
+when female: 
+body_mass = B0 + B1flipper
+when male:
+body_mass = B0 + (B1+B3)flipper + B2sex=male
+
+```{r}
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g, color = sex)) +
+  geom_point() +
+  geom_abline(intercept = -5443.9607, slope = 47.1527, color = "red") +
+  geom_abline(intercept = -5443.9607 + 406.8015, slope = 47.1527 + -0.2942     , color = "blue")
+
+```
+
+# use palmer penguins to fit a model that has an interaction between two continous variables
